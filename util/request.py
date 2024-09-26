@@ -26,3 +26,19 @@ def test1():
 
 if __name__ == '__main__':
     test1()
+
+
+
+
+
+
+
+
+#docker compose up --build --force-recreate rebuild and restart
+#docker compose up run your app
+#-d for detached mode
+#docker compose restart (restart without rebuilding)
+
+#http headers can only contain ASCII and end with /r/n/r/n
+#get string length by converting to bytes then getting the length look at lecture 9/9
+#lecture 9/11 is for learning objective 3 the first 2 learning objectives i should know now yipee
