@@ -22,14 +22,14 @@ class Request:
                 if ':' in eachline:
                     if 'Cookies' in eachline:
                         spliteachline = eachline.split(': ', 1)
-                        self.headers[spliteachline[0]] = spliteachline[1]
+                        self.headers[spliteachline[0].strip()] = spliteachline[1].strip()
                         spliteachline2 = spliteachline[1].split('; ')
                         for linez in spliteachline2:
                             spliteachline3 = linez.split('=')
-                            self.cookies[spliteachline3[0]] = spliteachline3[1]
+                            self.cookies[spliteachline3[0].strip()] = spliteachline3[1].strip()
                     else:
                         splitheaderline = eachline.split(': ', 1)
-                        self.headers[splitheaderline[0]] = splitheaderline[1]
+                        self.headers[splitheaderline[0].strip()] = splitheaderline[1].strip()
 
                 else:
                     self.method, self.path, self.http_version = eachline.split()
@@ -53,11 +53,12 @@ def test1():
     # test using a POST request. Also, ensure that the types of all values are correct
 
 def test2():
-    request = Request(b'POST /path1231 HTTP/1.1\r\nHost: localhost:8080\r\nConnection: keep-alive\r\nCookies: id1=thisdobeacookie; id2=thisanothercookie; id3=thisathirdcookie\r\n\r\nHELLO WORLD!!!')
+    request = Request(b'POST /path1231 HTTP/1.1\r\n Host:  localhost:8080\r\nConnection:  keep-alive\r\nCookies: id1=thisdobeacookie; id2=thisanothercookie; id3=thisathirdcookie\r\n\r\nHELLO WORLD!!!')
     assert request.method == 'POST'
     assert request.path == '/path1231'
     assert request.http_version == 'HTTP/1.1'
     assert request.body == b"HELLO WORLD!!!"
+    assert request.headers["Host"] == "localhost:8080"
     #print(f"cookie:header = {request.cookies}")
     #print(f"method = {request.method}\n")
     #print(f"path = {request.path}\n")
@@ -68,7 +69,7 @@ def test2():
 
 if __name__ == '__main__':
     test2()
-    #test1()
+    test1()
     print("Tests Passed")
 
 
