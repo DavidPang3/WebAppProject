@@ -15,7 +15,7 @@ class Request:
         requesttransform = separatefirst[0].decode('utf-8')
 
         lines = requesttransform.splitlines()
-                                        #GET / HTTP/1.1,    Host: localhost:8080,    Connection: keep-alive,    ,  
+                                        #GET / HTTP/1.1,    Host: localhost:8080,    Connection: keep-alive,    Cookie: key=cookie1; key=cookie2; key=cookie3;    ,pseudobody 
 
         for eachline in lines:
             if eachline:
@@ -23,6 +23,10 @@ class Request:
                     if 'Cookies' in eachline:
                         spliteachline = eachline.split(': ', 1)
                         self.headers[spliteachline[0]] = spliteachline[1]
+                        spliteachline2 = spliteachline[1].split('; ')
+                        for linez in spliteachline2:
+                            spliteachline3 = linez.split('=')
+                            self.cookies[spliteachline3[0]] = spliteachline3[1]
                     else:
                         splitheaderline = eachline.split(': ', 1)
                         self.headers[splitheaderline[0]] = splitheaderline[1]
@@ -49,7 +53,7 @@ def test1():
     # test using a POST request. Also, ensure that the types of all values are correct
 
 def test2():
-    request = Request(b'POST /path1231 HTTP/1.1\r\nHost: localhost:8080\r\nConnection: keep-alive\r\nCookies: thisdobeacookie; thisanothercookie; thisathirdcookie\r\n\r\nHELLO WORLD!!!')
+    request = Request(b'POST /path1231 HTTP/1.1\r\nHost: localhost:8080\r\nConnection: keep-alive\r\nCookies: id1=thisdobeacookie; id2=thisanothercookie; id3=thisathirdcookie\r\n\r\nHELLO WORLD!!!')
     assert request.method == 'POST'
     assert request.path == '/path1231'
     assert request.http_version == 'HTTP/1.1'
@@ -60,6 +64,7 @@ def test2():
     #print(f"http_version = {request.http_version}\n")
     #print(f"amount of bytes in body = {request.body}")
     print(f"headers = {request.headers}")
+    print(f"cookies = {request.cookies}")
 
 if __name__ == '__main__':
     test2()
