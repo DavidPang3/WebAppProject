@@ -14,15 +14,19 @@ class Router:
             if index['exact_path'] == True:
                 if index['method'] == request.method and index['path'] == request.path:
                     index['action'](request, handler)
+                    return
              
             elif index['exact_path'] == False:
                 if index['method']==request.method:
                     if request.path.startswith(index['path']):
                         index['action'](request, handler)
+                        return
                     elif index['path'].startswith(request.path):
                         index['action'](request, handler)
+                        return
 
                 
         response = 'HTTP/1.1 404 Not Found\r\n Content-Type: text/plain\r\n Content-Length: 36\r\n\r\nThe requested content does not exist'
         handler.request.sendall(response.encode())
+        return
     
