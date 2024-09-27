@@ -26,7 +26,7 @@ class Router:
                         return
 
                 
-        response = 'HTTP/1.1 404 Not Found\r\n Content-Type: text/plain\r\n Content-Length: 36\r\n\r\nThe requested content does not exist'
-        handler.request.sendall(response.encode())
+        #response = 'HTTP/1.1 404 Not Found\r\n Content-Type: text/plain\r\n Content-Length: 36\r\n\r\nThe requested content does not exist'
+        #handler.request.sendall(response.encode())
         return
     
