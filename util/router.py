@@ -14,22 +14,17 @@ class Router:
                     return
                          
             elif index['exact_path'] == False:
-                if request.path.startswith(index['path']):
-                    index['action'](request, handler)
-                    return
+                if index['method']==request.method:
+                    if request.path.startswith(index['path']):
+                        index['action'](request, handler)
+                        return
+                    if index['path'].startswith(request.path):
+                        index['action'](request, handler)
+                        return
                 
         else:
             response = 'HTTP/1.1 404 Not Found\r\n Content-Type: text/plain\r\n Content-Length: 36\r\n\r\nThe requested content does not exist'
             handler.request.sendall(response.encode())
             return
     
-
-              #test = False
-                #for characterindex in len(index['path']):
-                    #if index['path'][characterindex] == request.path[characterindex]:
-                        #test = True
-                    #else:
-                        #test = False
-                #if test == True:
-                    #print("add functionality for false")
 
