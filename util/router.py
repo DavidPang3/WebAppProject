@@ -14,13 +14,12 @@ class Router:
             if index['exact_path'] == True:
                 if index['method'] == request.method and index['path'] == request.path:
                     index['action'](request, handler)
-         
-                         
-            else:
+             
+            elif index['exact_path'] == False:
                 if index['method']==request.method:
                     if request.path.startswith(index['path']):
                         index['action'](request, handler)
-                    if index['path'].startswith(request.path):
+                    elif index['path'].startswith(request.path):
                         index['action'](request, handler)
 
                 
