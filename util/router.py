@@ -4,20 +4,30 @@ class Router:
         self.routes = []
 
     def add_route(self, method, path, action, exact_path=False):
-        self.method = method
-        self.path = path
-        self.boolean = exact_path
-        self.function = action
-
-        
+        self.routes.append({'method':method, 'path':path, 'action':action, 'exact_path':exact_path})
 
     def route_request(self, request, handler):
-        pass
+        for index in self.routes:
+            if index['exact_path'] == True:
+                if index['method'] == request.method and index['path'] == request.path:
+                    index['action'](request, handler)
+                    return
+                         
+            elif index['exact_path'] == False:
+                if request.path.startswith(index['path']):
+                    index['action'](request, handler)
+                    return
+                
+        else:
+            return
+    
 
-def test1():
-    router = Router
-    print(f"routes: {router.routes}")
+              #test = False
+                #for characterindex in len(index['path']):
+                    #if index['path'][characterindex] == request.path[characterindex]:
+                        #test = True
+                    #else:
+                        #test = False
+                #if test == True:
+                    #print("add functionality for false")
 
-
-if __name__ == '__main__':
-    test1()
