@@ -8,13 +8,13 @@ from util.hello_path import hello_path
 def send_home(request, handler):
     file_path = open('public/index.html', 'r')
     html_content = file_path.read()
-    response = f"HTTP/1.1 200 OK\r\nContent-Type: text/html; charset=utf-8\r\nContent-Length: {len(html_content.encode('utf-8'))}\r\nConnection: close\r\n\r\n{html_content}"
+    response = f"HTTP/1.1 200 OK\r\nContent-Type: text/html; charset=utf-8\r\nContent-Length: {len(html_content.encode('utf-8'))}\r\n\r\n{html_content}"
     handler.request.sendall(response.encode('utf-8'))
     
 def send_css(request, handler):
     file_path = open('public/style.css', 'r')
     css_content = file_path.read()
-    response = f"HTTP/1.1 200 OK\r\nContent-Type: text/css; charset=utf-8\r\nContent-Length: {len(css_content)}\r\nConnection: close\r\n\r\n{css_content}"
+    response = f"HTTP/1.1 200 OK\r\nContent-Type: text/css; charset=utf-8\r\nContent-Length: {len(css_content.encode('utf-8'))}\r\n\r\n{css_content}"
     handler.request.sendall(response.encode('utf-8'))
 
 def send_javascript(request, handler):
@@ -32,7 +32,7 @@ class MyTCPHandler(socketserver.BaseRequestHandler):
     def __init__(self, request, client_address, server):
         self.router = Router()
         self.router.add_route("GET", "/", send_home, True)
-        #self.router.add_route("GET", "styles.css", send_css, True)
+        self.router.add_route("GET", "/styles.css", send_css, True)
         #self.router.add_route("GET", "/", send_javascript, True)
         #self.router.add_route("GET", "/", send_images, True)
         super().__init__(request, client_address, server)
