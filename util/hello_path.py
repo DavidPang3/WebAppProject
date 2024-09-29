@@ -10,79 +10,79 @@ class functions:
     def send_home(request, handler):
         file_path = open('public/index.html', 'r')
         html_content = file_path.read()
-        response = f"HTTP/1.1 200 OK\r\nContent-Type: text/html; charset=utf-8\r\nContent-Length: {len(html_content.encode('utf-8'))}\r\n\r\n{html_content}"
+        response = f"HTTP/1.1 200 OK\r\nX-Content-Type-Options: nosniff\r\nContent-Type: text/html; charset=utf-8\r\nContent-Length: {len(html_content.encode('utf-8'))}\r\n\r\n{html_content}"
         handler.request.sendall(response.encode('utf-8'))
         
     def send_css(request, handler):
         file_path = open('public/style.css', 'r')
         css_content = file_path.read()
-        response = f"HTTP/1.1 200 OK\r\nContent-Type: text/css; charset=utf-8\r\nContent-Length: {len(css_content.encode('utf-8'))}\r\n\r\n{css_content}"
+        response = f"HTTP/1.1 200 OK\r\nX-Content-Type-Options: nosniff\r\nContent-Type: text/css; charset=utf-8\r\nContent-Length: {len(css_content.encode('utf-8'))}\r\n\r\n{css_content}"
         handler.request.sendall(response.encode('utf-8'))
 
     def send_javascript(request, handler):
         file_path = open('public/functions.js', 'r')
         javascript_content = file_path.read()
-        response = f"HTTP/1.1 200 OK\r\nContent-Type: application/javascript; charset=utf-8\r\nContent-Length: {len(javascript_content.encode('utf-8'))}\r\n\r\n{javascript_content}"
+        response = f"HTTP/1.1 200 OK\r\nX-Content-Type-Options: nosniff\r\nContent-Type: application/javascript; charset=utf-8\r\nContent-Length: {len(javascript_content.encode('utf-8'))}\r\n\r\n{javascript_content}"
         handler.request.sendall(response.encode('utf-8'))
 
     def send_webjavascript(request, handler):
         file_path = open('public/webrtc.js', 'r')
         javascript_webcontent = file_path.read()
-        response = f"HTTP/1.1 200 OK\r\nContent-Type: application/javascript; charset=utf-8\r\nContent-Length: {len(javascript_webcontent.encode('utf-8'))}\r\n\r\n{javascript_webcontent}"
+        response = f"HTTP/1.1 200 OK\r\nX-Content-Type-Options: nosniff\r\nContent-Type: application/javascript; charset=utf-8\r\nContent-Length: {len(javascript_webcontent.encode('utf-8'))}\r\n\r\n{javascript_webcontent}"
         handler.request.sendall(response.encode('utf-8'))
 
     def send_image_eagle(request, handler):
         file_path = open('public/image/eagle.jpg', 'rb')
         image_content = file_path.read()
-        response = f"HTTP/1.1 200 OK\r\nContent-Type: image/jpeg;\r\nContent-Length: {len(image_content)}\r\n\r\n"
+        response = f"HTTP/1.1 200 OK\r\nX-Content-Type-Options: nosniff\r\nContent-Type: image/jpeg;\r\nContent-Length: {len(image_content)}\r\n\r\n"
         handler.request.sendall(response.encode('utf-8'))
         handler.request.sendall(image_content)
 
     def send_image_cat(request, handler):
         file_path = open('public/image/cat.jpg', 'rb')
         image_content = file_path.read()
-        response = f"HTTP/1.1 200 OK\r\nContent-Type: image/jpeg;\r\nContent-Length: {len(image_content)}\r\n\r\n"
+        response = f"HTTP/1.1 200 OK\r\nX-Content-Type-Options: nosniff\r\nContent-Type: image/jpeg;\r\nContent-Length: {len(image_content)}\r\n\r\n"
         handler.request.sendall(response.encode('utf-8'))
         handler.request.sendall(image_content)
 
     def send_image_dog(request, handler):
         file_path = open('public/image/dog.jpg', 'rb')
         image_content = file_path.read()
-        response = f"HTTP/1.1 200 OK\r\nContent-Type: image/jpeg;\r\nContent-Length: {len(image_content)}\r\n\r\n"
+        response = f"HTTP/1.1 200 OK\r\nX-Content-Type-Options: nosniff\r\nContent-Type: image/jpeg;\r\nContent-Length: {len(image_content)}\r\n\r\n"
         handler.request.sendall(response.encode('utf-8'))
         handler.request.sendall(image_content)
 
     def send_image_smallelephant(request, handler):
         file_path = open('public/image/elephant-small.jpg', 'rb')
         image_content = file_path.read()
-        response = f"HTTP/1.1 200 OK\r\nContent-Type: image/jpeg;\r\nContent-Length: {len(image_content)}\r\n\r\n"
+        response = f"HTTP/1.1 200 OK\r\nX-Content-Type-Options: nosniff\r\nContent-Type: image/jpeg;\r\nContent-Length: {len(image_content)}\r\n\r\n"
         handler.request.sendall(response.encode('utf-8'))
         handler.request.sendall(image_content)
 
     def send_image_elephant(request, handler):
         file_path = open('public/image/elephant.jpg', 'rb')
         image_content = file_path.read()
-        response = f"HTTP/1.1 200 OK\r\nContent-Type: image/jpeg;\r\nContent-Length: {len(image_content)}\r\n\r\n"
+        response = f"HTTP/1.1 200 OK\r\nX-Content-Type-Options: nosniff\r\nContent-Type: image/jpeg;\r\nContent-Length: {len(image_content)}\r\n\r\n"
         handler.request.sendall(response.encode('utf-8'))
         handler.request.sendall(image_content)
 
     def send_image_flamingo(request, handler):
         file_path = open('public/image/flamingo.jpg', 'rb')
         image_content = file_path.read()
-        response = f"HTTP/1.1 200 OK\r\nContent-Type: image/jpeg;\r\nContent-Length: {len(image_content)}\r\n\r\n"
+        response = f"HTTP/1.1 200 OK\r\nX-Content-Type-Options: nosniff\r\nContent-Type: image/jpeg;\r\nContent-Length: {len(image_content)}\r\n\r\n"
         handler.request.sendall(response.encode('utf-8'))
         handler.request.sendall(image_content)
 
     def send_image_kitten(request, handler):
         file_path = open('public/image/kitten.jpg', 'rb')
         image_content = file_path.read()
-        response = f"HTTP/1.1 200 OK\r\nContent-Type: image/jpeg;\r\nContent-Length: {len(image_content)}\r\n\r\n"
+        response = f"HTTP/1.1 200 OK\r\nX-Content-Type-Options: nosniff\r\nContent-Type: image/jpeg;\r\nContent-Length: {len(image_content)}\r\n\r\n"
         handler.request.sendall(response.encode('utf-8'))
         handler.request.sendall(image_content)
 
     def send_ico(request, handler):
         file_path = open('public/favicon.ico', 'rb')
         image_content = file_path.read()
-        response = f"HTTP/1.1 200 OK\r\nContent-Type: image/x-icon;\r\nContent-Length: {len(image_content)}\r\n\r\n"
+        response = f"HTTP/1.1 200 OK\r\nX-Content-Type-Options: nosniff\r\nContent-Type: image/x-icon;\r\nContent-Length: {len(image_content)}\r\n\r\n"
         handler.request.sendall(response.encode('utf-8'))
         handler.request.sendall(image_content)
