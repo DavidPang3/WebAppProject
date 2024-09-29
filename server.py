@@ -1,40 +1,24 @@
 import socketserver
 from util.request import Request
 from util.router import Router
-from util.hello_path import hello_path
-
-#request to response
-
-def send_home(request, handler):
-    file_path = open('public/index.html', 'r')
-    html_content = file_path.read()
-    response = f"HTTP/1.1 200 OK\r\nContent-Type: text/html; charset=utf-8\r\nContent-Length: {len(html_content.encode('utf-8'))}\r\n\r\n{html_content}"
-    handler.request.sendall(response.encode('utf-8'))
-    
-def send_css(request, handler):
-    file_path = open('public/style.css', 'r')
-    css_content = file_path.read()
-    response = f"HTTP/1.1 200 OK\r\nContent-Type: text/css; charset=utf-8\r\nContent-Length: {len(css_content.encode('utf-8'))}\r\n\r\n{css_content}"
-    handler.request.sendall(response.encode('utf-8'))
-
-def send_javascript(request, handler):
-    javascript = ""
-    handler.request.sendall(javascript.encode())
-
-def send_images(request, handler):
-    images = ""
-    handler.request.sendall(images.encode())
-
-
+from util.hello_path import functions
 
 class MyTCPHandler(socketserver.BaseRequestHandler):
 
     def __init__(self, request, client_address, server):
         self.router = Router()
-        self.router.add_route("GET", "/", send_home, True)
-        self.router.add_route("GET", "/styles.css", send_css, True)
-        #self.router.add_route("GET", "/", send_javascript, True)
-        #self.router.add_route("GET", "/", send_images, True)
+        self.router.add_route("GET", "/", functions.send_home, True)
+        self.router.add_route("GET", "/public/style.css", functions.send_css, True)
+        self.router.add_route("GET", "/public/functions.js", functions.send_javascript, True)
+        self.router.add_route("GET", "/public/webrtc.js", functions.send_webjavascript, True)
+        self.router.add_route("GET", "/public/image/eagle.jpg", functions.send_image_eagle, True)
+        self.router.add_route("GET", "/public/image/cat.jpg", functions.send_image_cat, True)
+        self.router.add_route("GET", "/public/image/dog.jpg", functions.send_image_dog, True)
+        self.router.add_route("GET", "/public/image/elephant-small.jpg", functions.send_image_smallelephant, True)
+        self.router.add_route("GET", "/public/image/elephant.jpg", functions.send_image_elephant, True)
+        self.router.add_route("GET", "/public/image/flamingo.jpg", functions.send_image_flamingo, True)
+        self.router.add_route("GET", "/public/image/kitten.jpg", functions.send_image_kitten, True)
+        self.router.add_route("GET", "/public/favicon.ico", functions.send_ico, True)
         super().__init__(request, client_address, server)
 
     def handle(self):
