@@ -1,5 +1,6 @@
 
 # This path is provided as an example of how to use the router
+import json
 
 class functions:
         
@@ -90,3 +91,22 @@ class functions:
         response = f"HTTP/1.1 200 OK\r\nX-Content-Type-Options: nosniff\r\nContent-Type: image/x-icon;\r\nContent-Length: {len(image_content)}\r\n\r\n"
         handler.request.sendall(response.encode('utf-8'))
         handler.request.sendall(image_content)
+
+
+#Sorry I just finished LO2 and its already 2 am on 9/30 so there's no way I can't implement enough functionality for useful feedback..
+
+    def data_get(request, handler):
+        print("Testing Button get?")
+
+
+    def data_post(request, handler):
+        print("Testing Button post?")
+        message = {
+            "message": "Hello World",
+            "username": "Guest"
+        }
+        handler.request.sendall("Message Sent")
+        
+
+    def data_delete(request, handler):
+        print("Testing Button delete?")
