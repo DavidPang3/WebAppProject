@@ -8,11 +8,15 @@ class functions:
             handler.request.sendall(response.encode())
 
     def send_home(request, handler):
+        visitcount = int(request.cookies.get('visit_count', 0))
+        visitcount += 1
+        cookieinsert = f"visit_count={visitcount}; Max-Age=3600"
         file_path = open('public/index.html', 'r')
         html_content = file_path.read()
-        response = f"HTTP/1.1 200 OK\r\nX-Content-Type-Options: nosniff\r\nContent-Type: text/html; charset=utf-8\r\nContent-Length: {len(html_content.encode('utf-8'))}\r\n\r\n{html_content}"
+        html_content = html_content.replace("{{visits}}", str(visitcount))
+        response = f"HTTP/1.1 200 OK\r\nX-Content-Type-Options: nosniff\r\nContent-Type: text/html; charset=utf-8\r\nContent-Length: {len(html_content.encode('utf-8'))}\r\nSet-Cookie: {cookieinsert}\r\n\r\n{html_content}"
         handler.request.sendall(response.encode('utf-8'))
-        
+
     def send_css(request, handler):
         file_path = open('public/style.css', 'r')
         css_content = file_path.read()
