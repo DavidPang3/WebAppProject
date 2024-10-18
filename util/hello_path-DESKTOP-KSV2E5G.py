@@ -1,51 +1,9 @@
 
 # This path is provided as an example of how to use the router
 import json
-from pymongo import MongoClient
-import uuid
-
-mongo_client = MongoClient("mongo")
-db = mongo_client["cse312"]
-chat_collection = db["chat"]
 
 class functions:
-   
-    def data_get(request, handler):
-        all_data = chat_collection.find({})
-        chat_history = []
-        for message in all_data:
-            chat_history.append({
-                "message": message["message"],
-                "username": message["username"],
-                "id": message["id"]
-            })
         
-        for printit in chat_history:
-            print(f"TESTING CHAT_HISTORY LETS SEEEEEE: {printit}")
-            
-        messageresponse = chat_history
-        response = f'HTTP/1.1 200 OK\r\n Content-Type: text/plain\r\n Content-Length: {len(messageresponse)}\r\n\r\n{messageresponse}'
-        handler.request.sendall(response.encode())
-        
-    def data_post(request, handler):
-        unique_id = str(uuid.uuid4())
-        body = request.body.decode('utf-8')
-        holder = json.loads(body)
-        message = holder["message"]
-        chat_collection.insert_one({"username": "Guest", "message": message, "id": unique_id}) 
-
-        messageresponse = "Successfully Sent!"
-        response = f'HTTP/1.1 200 OK\r\n Content-Type: text/plain\r\n Content-Length: {len(messageresponse)}\r\n\r\n{messageresponse}'
-        handler.request.sendall(response.encode())
-        '''
-        documents = chat_collection.find()
-        for document in documents:
-            print(document)
-        '''
-
-    def data_delete(request, handler):
-        print("Testing Button delete?")
-
     def hello_path(request, handler):
             response = "HTTP/1.1 200 OK\r\nContent-Length: 5\r\nContent-Type: text/plain; charset=utf-8\r\n\r\nhello"
             handler.request.sendall(response.encode())
@@ -135,6 +93,26 @@ class functions:
         handler.request.sendall(image_content)
 
     def send_404(request, handler):
-        message = "The requested conted does not exist!! Try another pathway!"
-        response = f'HTTP/1.1 404 Not Found\r\n Content-Type: text/plain\r\n Content-Length: {len(message)}\r\n\r\n{message}'
-        handler.request.sendall(response.encode())
+        text = "The Requested Content Doesn't Exist!"
+        response = f'HTTP/1.1 404 Not Found\r\n Content-Type: text/plain\r\n Content-Length: {len(text)}\r\n\r\n{text}'
+        handler.request.sendall(response.encode('utf-8'))
+
+#docker compose up --build --force-recreate
+
+#Sorry I just finished LO2 and its already 2 am on 9/30 so there's no way I can't implement enough functionality for useful feedback..
+
+    def data_get(request, handler):
+        print("Testing Button get?")
+
+
+    def data_post(request, handler):
+        print("Testing Button post?")
+        message = {
+            "message": "Hello World",
+            "username": "Guest"
+        }
+        handler.request.sendall("Message Sent")
+        
+
+    def data_delete(request, handler):
+        print("Testing Button delete?")
