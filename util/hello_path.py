@@ -35,14 +35,14 @@ class functions:
         messageresponse = "Successfully Sent!"
         response = f'HTTP/1.1 200 OK\r\n Content-Type: text/plain\r\n Content-Length: {len(messageresponse.encode("utf-8"))}\r\n\r\n{messageresponse}'
         handler.request.sendall(response.encode())
-        '''
-        documents = chat_collection.find()
-        for document in documents:
-            print(document)
-        '''
 
     def data_delete(request, handler):
-        print("Testing Button delete?")
+        id = request.path.split("/")[2]
+        print(f"id = {id}")
+        chat_collection.delete_one({"id": id})
+        response = "HTTP/1.1 204 No Content\r\nContent-Length: 0\r\nContent-Type: text/plain; charset=utf-8\r\n\r\n"
+        handler.request.sendall(response.encode())
+
 
     def hello_path(request, handler):
             response = "HTTP/1.1 200 OK\r\nContent-Length: 5\r\nContent-Type: text/plain; charset=utf-8\r\n\r\nhello"
