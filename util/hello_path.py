@@ -13,18 +13,16 @@ class functions:
     def data_get(request, handler):
         all_data = chat_collection.find({})
         chat_history = []
+        
         for message in all_data:
             chat_history.append({
                 "message": message["message"],
                 "username": message["username"],
                 "id": message["id"]
             })
-        
-        for printit in chat_history:
-            print(f"TESTING CHAT_HISTORY LETS SEEEEEE: {printit}")
             
-        messageresponse = chat_history
-        response = f'HTTP/1.1 200 OK\r\n Content-Type: text/plain\r\n Content-Length: {len(messageresponse)}\r\n\r\n{messageresponse}'
+        messageresponse = json.dumps(chat_history)
+        response = f'HTTP/1.1 200 OK\r\nContent-Type: application/json\r\nContent-Length: {len(messageresponse.encode("utf-8"))}\r\n\r\n{messageresponse}'
         handler.request.sendall(response.encode())
         
     def data_post(request, handler):
@@ -35,7 +33,7 @@ class functions:
         chat_collection.insert_one({"username": "Guest", "message": message, "id": unique_id}) 
 
         messageresponse = "Successfully Sent!"
-        response = f'HTTP/1.1 200 OK\r\n Content-Type: text/plain\r\n Content-Length: {len(messageresponse)}\r\n\r\n{messageresponse}'
+        response = f'HTTP/1.1 200 OK\r\n Content-Type: text/plain\r\n Content-Length: {len(messageresponse.encode("utf-8"))}\r\n\r\n{messageresponse}'
         handler.request.sendall(response.encode())
         '''
         documents = chat_collection.find()
