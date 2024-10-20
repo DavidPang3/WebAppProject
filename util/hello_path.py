@@ -8,6 +8,21 @@ mongo_client = MongoClient("mongo")
 db = mongo_client["cse312"]
 chat_collection = db["chat"]
 
+
+def injection(message):
+    newstring = ""
+    for index in message:
+        if(index == '&'):
+            newstring += "&amp"
+        elif(index == '<'):
+            newstring += "&lt"
+        elif(index == '>'):
+            newstring += "&gt"
+        else:
+            newstring += index
+    return newstring
+
+
 class functions:
    
     def data_get(request, handler):
@@ -24,13 +39,15 @@ class functions:
         messageresponse = json.dumps(chat_history)
         response = f'HTTP/1.1 200 OK\r\nContent-Type: application/json\r\nContent-Length: {len(messageresponse.encode("utf-8"))}\r\n\r\n{messageresponse}'
         handler.request.sendall(response.encode())
+
         
     def data_post(request, handler):
         unique_id = str(uuid.uuid4())
         body = request.body.decode('utf-8')
         holder = json.loads(body)
         message = holder["message"]
-        chat_collection.insert_one({"username": "Guest", "message": message, "id": unique_id}) 
+        parsedmessage = injection(message)
+        chat_collection.insert_one({"username": "Guest", "message": parsedmessage, "id": unique_id}) 
 
         messageresponse = "Successfully Sent!"
         response = f'HTTP/1.1 200 OK\r\n Content-Type: text/plain\r\n Content-Length: {len(messageresponse.encode("utf-8"))}\r\n\r\n{messageresponse}'
