@@ -37,7 +37,7 @@ class functions:
             })
             
         messageresponse = json.dumps(chat_history)
-        response = f'HTTP/1.1 200 OK\r\nContent-Type: application/json\r\nContent-Length: {len(messageresponse.encode("utf-8"))}\r\n\r\n{messageresponse}'
+        response = f'HTTP/1.1 200 OK\r\nX-Content-Type-Options: nosniff\r\nContent-Type: application/json\r\nContent-Length: {len(messageresponse.encode("utf-8"))}\r\n\r\n{messageresponse}'
         handler.request.sendall(response.encode())
 
         
@@ -50,14 +50,14 @@ class functions:
         chat_collection.insert_one({"username": "Guest", "message": parsedmessage, "id": unique_id}) 
 
         messageresponse = "Successfully Sent!"
-        response = f'HTTP/1.1 200 OK\r\n Content-Type: text/plain\r\n Content-Length: {len(messageresponse.encode("utf-8"))}\r\n\r\n{messageresponse}'
+        response = f'HTTP/1.1 200 OK\r\nX-Content-Type-Options: nosniff\r\nContent-Type: text/plain\r\n Content-Length: {len(messageresponse.encode("utf-8"))}\r\n\r\n{messageresponse}'
         handler.request.sendall(response.encode())
 
     def data_delete(request, handler):
         id = request.path.split("/")[2]
         print(f"id = {id}")
         chat_collection.delete_one({"id": id})
-        response = "HTTP/1.1 204 No Content\r\nContent-Length: 0\r\nContent-Type: text/plain; charset=utf-8\r\n\r\n"
+        response = "HTTP/1.1 204 No Content\r\nX-Content-Type-Options: nosniff\r\n\r\n"
         handler.request.sendall(response.encode())
 
 
@@ -83,7 +83,7 @@ class functions:
 
     def send_javascript(request, handler):
         file_path = open('public/functions.js', 'r')
-        javascript_content = file_path.read()
+        javascript_content = file_path.read()                                          
         response = f"HTTP/1.1 200 OK\r\nX-Content-Type-Options: nosniff\r\nContent-Type: application/javascript; charset=utf-8\r\nContent-Length: {len(javascript_content.encode('utf-8'))}\r\n\r\n{javascript_content}"
         handler.request.sendall(response.encode('utf-8'))
 
@@ -150,6 +150,6 @@ class functions:
         handler.request.sendall(image_content)
 
     def send_404(request, handler):
-        message = "The requested conted does not exist!! Try another pathway!"
-        response = f'HTTP/1.1 404 Not Found\r\n Content-Type: text/plain\r\n Content-Length: {len(message)}\r\n\r\n{message}'
+        message = "The requested content does not exist!! Try another pathway!"
+        response = f'HTTP/1.1 404 Not Found\r\nX-Content-Type-Options: nosniff\r\n Content-Type: text/plain\r\n Content-Length: {len(message)}\r\n\r\n{message}'
         handler.request.sendall(response.encode())

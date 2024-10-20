@@ -19,11 +19,10 @@ class MyTCPHandler(socketserver.BaseRequestHandler):
         self.router.add_route("GET", "/public/image/flamingo.jpg", functions.send_image_flamingo, True)
         self.router.add_route("GET", "/public/image/kitten.jpg", functions.send_image_kitten, True)
         self.router.add_route("GET", "/public/favicon.ico", functions.send_ico, True)
-        self.router.add_route("GET", "", functions.send_404, True)
-
-        self.router.add_route("GET", "/chat-messages", functions.data_get, False)
-        self.router.add_route("POST", "/chat-messages", functions.data_post, False)
-        self.router.add_route("DELETE", "/chat-messages", functions.data_delete, False)
+        self.router.add_route("GET", "/chat-messages", functions.data_get, True)
+        self.router.add_route("POST", "/chat-messages", functions.data_post, True)
+        self.router.add_route("DELETE", "/chat-messages/", functions.data_delete, False)
+        self.router.add_route("GET", "/", functions.send_404, False)
         super().__init__(request, client_address, server)
 
     def handle(self):
